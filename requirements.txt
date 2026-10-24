@@ -1,0 +1,10 @@
+pandas==2.2.3
+numpy==2.2.5
+matplotlib==3.10.1
+scipy==1.15.2
+scikit-learn==1.6.1
+arabic-reshaper==3.0.1
+python-bidi==0.6.12
+ipython==8.36.0
+ipykernel==6.29.5
+jupyter==1.1.1
