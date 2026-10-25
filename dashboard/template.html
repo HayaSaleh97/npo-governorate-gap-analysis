@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>بوصلة العطاء</title>
+<style>
+/* ============================================================ variables */
+:root {
+  --bg-1: #05080d;
+  --bg-2: #0b1e3a;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-strong: rgba(11, 24, 46, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --accent: #7dd3fc;
+  --accent-soft: rgba(125, 211, 252, 0.14);
+  --heading: #ffffff;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --line: rgba(255, 255, 255, 0.10);
+  --below: #f97316;
+  --below-soft: rgba(249, 115, 22, 0.18);
+  --normal: #33445f;
+  --above: #38bdf8;
+  --above-soft: rgba(56, 189, 248, 0.16);
+  --focus: #7dd3fc;
+  --topbar: 64px;
+  --footer: 30px;
+  --radius: 14px;
+  --serif: "Sakkal Majalla", "Traditional Arabic", "Amiri", "Geeza Pro", serif;
+  --sans: "Segoe UI", Tahoma, "Geeza Pro", Arial, sans-serif;
+}
+
+/* ============================================================ base */
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+@media (min-width: 901px) { html { overflow: hidden; } }
+body {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  background:
+    radial-gradient(900px 600px at 85% 10%, rgba(56, 189, 248, 0.10), transparent 60%),
+    radial-gradient(800px 700px at 10% 90%, rgba(56, 189, 248, 0.07), transparent 60%),
+    linear-gradient(160deg, var(--bg-1), var(--bg-2));
+  background-attachment: fixed;
+  overflow: hidden;
+}
+/* faint 8-point geometric pattern (Sadu / Islamic geometry inspired) */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%237dd3fc' stroke-width='1'%3E%3Cpath d='M36 14 L42 30 L58 36 L42 42 L36 58 L30 42 L14 36 L30 30 Z'/%3E%3Cpath d='M20.4 20.4 L36 26 L51.6 20.4 L46 36 L51.6 51.6 L36 46 L20.4 51.6 L26 36 Z'/%3E%3Cpath d='M0 0 L8 8 M72 0 L64 8 M0 72 L8 64 M72 72 L64 64'/%3E%3C/g%3E%3C/svg%3E");
+}
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+.serif { font-family: var(--serif); }
+.eyebrow { font-size: 11px; letter-spacing: 0.22em; color: var(--accent); text-transform: uppercase; opacity: 0.9; }
+.muted { color: var(--muted); }
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.glass-solid { background: var(--glass-strong); }
+h1, h2, h3 { font-family: var(--serif); font-weight: 700; margin: 0; color: var(--heading); }
+h2 { font-size: 26px; line-height: 1.2; }
+h3 { font-size: 20px; line-height: 1.25; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; color: inherit; white-space: nowrap;
+  border: 1px solid var(--glass-border); background: var(--glass); padding: 8px 16px; border-radius: 999px;
+  cursor: pointer; transition: background .2s, border-color .2s, transform .15s;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.10); border-color: rgba(255, 255, 255, 0.22); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: #f97316; color: #0a1628; border-color: #f97316; font-weight: 700; }
+.btn.primary:hover { background: #fb923c; }
+.icon-btn { width: 34px; height: 34px; padding: 0; border-radius: 10px; display: inline-grid; place-items: center; }
+select.field, input.field {
+  background: rgba(0, 0, 0, 0.25); border: 1px solid var(--glass-border); border-radius: 10px; padding: 6px 10px; width: 100%;
+}
+select.field option { background: #0b1e3a; }
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 999px; font-size: 12px; border: 1px solid transparent; }
+.badge.below { background: var(--below-soft); color: #fdba74; border-color: rgba(249, 115, 22, 0.35); }
+.badge.normal { background: rgba(255, 255, 255, 0.06); color: var(--muted); border-color: var(--line); }
+.badge.above { background: var(--above-soft); color: #bae6fd; border-color: rgba(56, 189, 248, 0.35); }
+.badge.gold { background: var(--accent-soft); color: var(--accent); border-color: rgba(125, 211, 252, 0.35); }
+.note { background: rgba(125, 211, 252, 0.10); border: 1px solid rgba(125, 211, 252, 0.30); border-radius: 10px; padding: 6px 10px; font-size: 13px; }
+svg.chart { direction: ltr; }
+.scroll { overflow: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.2) transparent; }
+
+/* ============================================================ top bar */
+.topbar {
+  position: fixed; inset: 0 0 auto 0; height: var(--topbar); z-index: 30;
+  display: flex; align-items: center; gap: 18px; padding: 0 22px;
+  background: rgba(5, 10, 20, 0.78); border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.brand { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.brand .name { font-family: var(--serif); font-size: 26px; color: var(--heading); line-height: 1; }
+.brand .tag { font-size: 12px; color: var(--muted); }
+.tabs { position: relative; display: flex; gap: 2px; margin-inline-start: auto; }
+.tab {
+  white-space: nowrap; border: 0; background: none; padding: 8px 14px; cursor: pointer; color: var(--muted); border-radius: 8px;
+  transition: color .2s, background .2s;
+}
+.tab:hover { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+.tab[aria-selected="true"] { color: var(--text); font-weight: 700; }
+.tab-indicator.no-anim { transition: none; }
+.tab-indicator { position: absolute; left: 0; bottom: -2px; height: 2px; width: 0; background: var(--accent); border-radius: 2px; transition: transform .3s, width .3s; }
+.search { position: relative; width: 240px; }
+.suggestions {
+  position: absolute; inset-inline: 0; top: calc(100% + 6px); margin: 0; padding: 4px; list-style: none; z-index: 40;
+}
+.suggestions li { padding: 6px 10px; border-radius: 8px; cursor: pointer; }
+.suggestions li[aria-selected="true"], .suggestions li:hover { background: rgba(255, 255, 255, 0.08); }
+.suggestions .r { color: var(--muted); font-size: 12px; }
+
+/* ============================================================ views */
+main { position: relative; z-index: 1; height: 100vh; padding-top: var(--topbar); }
+.view {
+  position: absolute; inset: var(--topbar) 0 var(--footer) 0; padding: 18px 22px;
+  opacity: 0; transform: translateY(8px); pointer-events: none; visibility: hidden;
+  transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s;
+}
+.view.active { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition: opacity .25s ease, transform .25s ease; }
+
+/* ---------- overview */
+#view-overview { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 18px; }
+.hero { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.hero-title { font-family: var(--serif); font-size: 68px; line-height: 1; color: var(--heading); margin: 4px 0 0; }
+.hero-tagline { font-size: 22px; font-family: var(--serif); color: var(--text); margin: 0; }
+.site-footer {
+  position: fixed; inset: auto 0 0 0; height: var(--footer); z-index: 25;
+  display: flex; align-items: center; justify-content: center; padding: 0 16px;
+  font-size: 12px; color: var(--muted); background: rgba(5, 10, 20, 0.78); border-top: 1px solid var(--line);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hero-method { color: var(--muted); max-width: 560px; margin: 0; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: auto; }
+.kpi { padding: 14px 16px; position: relative; overflow: hidden; }
+.kpi .value { font-size: 32px; font-weight: 700; line-height: 1.1; }
+.kpi .label { color: var(--muted); font-size: 13px; }
+.kpi.accent .value { color: var(--below); }
+.overview-side { display: flex; min-height: 0; }
+.findings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.finding { padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.finding .k { font-size: 12px; color: var(--accent); }
+.finding .t { font-size: 14px; }
+.finding .t b { color: var(--text); }
+.top5 { padding: 12px 14px; }
+.top5 ol { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.top5 button { width: 100%; text-align: right; border: 1px solid var(--line); background: rgba(0,0,0,.18); border-radius: 10px; padding: 8px 10px; cursor: pointer; transition: border-color .2s, background .2s; }
+.top5 button:hover { border-color: rgba(249,115,22,.5); background: var(--below-soft); }
+.top5 .nm { display: block; font-weight: 700; }
+.top5 .rg { display: block; color: var(--muted); font-size: 11px; }
+.top5 .pc { display: block; color: #fdba74; font-weight: 700; font-size: 18px; }
+.top5 .bar { display: block; height: 4px; border-radius: 2px; background: rgba(255,255,255,.08); margin-top: 4px; position: relative; overflow: hidden; }
+.top5 .bar i { position: absolute; top: 0; bottom: 0; right: 0; background: var(--below); }
+.region-chart { padding: 14px 16px; display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.region-chart svg { flex: 1; min-height: 0; width: 100%; }
+.rbar { cursor: pointer; }
+.rbar rect.bar { transition: opacity .15s; }
+.rbar:hover rect.bar, .rbar:focus rect.bar { opacity: 0.8; }
+.rbar:hover text, .rbar:focus text { fill: var(--text); }
+
+/* ---------- map */
+#view-map { padding: 0; }
+#map-svg { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+#map-svg.dragging { cursor: grabbing; }
+#map-svg path.gov { stroke: rgba(5, 10, 20, 0.9); stroke-width: 0.7; vector-effect: non-scaling-stroke; transition: fill .3s, opacity .3s, filter .15s; }
+#map-svg path.gov:hover { stroke: #fff; stroke-width: 1.6; filter: brightness(1.25) drop-shadow(0 0 6px rgba(255,255,255,.35)); }
+#map-svg path.gov.selected { stroke: #ffffff; stroke-width: 2.4; filter: drop-shadow(0 0 8px rgba(255,255,255,.6)); }
+#map-svg path.gov.dim { opacity: 0.18; }
+#map-svg path.region { fill: none; stroke: rgba(241, 245, 249, 0.45); stroke-width: 1; vector-effect: non-scaling-stroke; pointer-events: none; }
+.marker { fill: var(--below); pointer-events: none; }
+.marker-ring { fill: none; stroke: var(--below); vector-effect: non-scaling-stroke; pointer-events: none; animation: pulse 2.2s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 0% { transform: scale(0.6); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
+.float { position: absolute; z-index: 5; padding: 12px; }
+.map-controls { top: 16px; inset-inline-start: 16px; width: 320px; display: flex; flex-direction: column; gap: 10px; }
+.toggle { display: flex; background: rgba(0, 0, 0, 0.25); border: 1px solid var(--glass-border); border-radius: 10px; padding: 3px; }
+.toggle button { flex: 1; white-space: nowrap; border: 0; background: none; padding: 6px 8px; border-radius: 8px; cursor: pointer; color: var(--muted); font-size: 13px; transition: background .2s, color .2s; }
+.toggle button[aria-pressed="true"] { background: var(--accent); color: #0a1628; font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.zoom { bottom: 16px; inset-inline-start: 16px; display: flex; flex-direction: column; gap: 6px; padding: 8px; }
+.map-note { bottom: 16px; inset-inline-start: 74px; padding: 6px 10px; font-size: 12px; color: var(--muted); max-width: 520px; }
+.dock { top: 16px; inset-inline-end: 16px; width: 280px; max-height: calc(100% - 32px); display: flex; flex-direction: column; padding: 0; transition: width .25s; }
+.dock-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.dock.collapsed { width: 200px; }
+.dock.collapsed .plist { display: none; }
+.plist { list-style: none; margin: 0; padding: 4px; }
+.plist button {
+  width: 100%; display: grid; grid-template-columns: 24px 1fr auto; gap: 8px; align-items: center; text-align: right;
+  border: 0; background: none; padding: 7px 8px; border-radius: 10px; cursor: pointer; transition: background .15s;
+}
+.plist button:hover { background: rgba(255, 255, 255, 0.06); }
+.plist button.selected { background: var(--accent-soft); }
+.plist .rank { color: var(--accent); font-size: 12px; }
+.plist .r { display: block; color: var(--muted); font-size: 11px; }
+.plist .pct { font-weight: 700; color: #fdba74; }
+.plist .lvl { display: block; font-size: 10px; color: var(--muted); }
+
+/* ---------- astrolabe */
+#view-astrolabe { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; }
+.astro-stage { position: relative; min-height: 0; padding: 10px; display: flex; flex-direction: column; }
+.astro-legend { position: absolute; top: 12px; inset-inline-end: 14px; flex-direction: column; gap: 3px; max-width: 200px; }
+.astro-stage .hint { position: absolute; top: 12px; inset-inline-start: 14px; font-size: 12px; color: var(--muted); max-width: 240px; }
+#astro-svg { flex: 1; min-height: 0; width: 100%; user-select: none; }
+#astro-svg .seg { cursor: pointer; transition: opacity .25s, filter .2s; }
+#astro-svg .seg:hover, #astro-svg .seg:focus { filter: brightness(1.25); outline: none; }
+#astro-svg .seg:focus-visible { stroke: var(--focus); stroke-width: 3; }
+#astro-svg .seg.dim { opacity: 0.45; }
+#astro-svg text { pointer-events: none; }
+#astro-svg.compact .mid-label { display: none; }
+.astro-panel { display: flex; flex-direction: column; gap: 10px; min-height: 0; padding: 16px; }
+.astro-panel .big { font-size: 46px; font-weight: 800; line-height: 1; }
+.plist-mini { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.plist-mini button { width: 100%; display: flex; justify-content: space-between; gap: 8px; border: 1px solid transparent; background: rgba(0,0,0,.18); border-radius: 10px; padding: 6px 10px; cursor: pointer; text-align: right; transition: border-color .2s; }
+.plist-mini button:hover, .plist-mini button.on { border-color: var(--accent); }
+.plist-mini .p { color: #fdba74; font-weight: 700; }
+.missing-chip { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--below-soft); border: 1px solid rgba(249,115,22,.5); color: #fdba74; margin: 2px; }
+.side { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.side .glass { padding: 14px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--glass-border); background: rgba(0,0,0,.2); padding: 4px 12px; border-radius: 999px; cursor: pointer; font-size: 13px; transition: background .2s, border-color .2s, color .2s; color: var(--muted); }
+.chip:hover { color: var(--text); border-color: rgba(255,255,255,.25); }
+.chip[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: rgba(125,211,252,.5); }
+
+/* ---------- profile */
+#view-profile { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 14px; }
+.profile-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 16px; }
+.profile-head .title { font-family: var(--serif); font-size: 40px; color: var(--heading); line-height: 1; }
+.profile-head .nav { margin-inline-start: auto; display: flex; gap: 8px; align-items: center; }
+.profile-head select { width: 210px; }
+.profile-grid { display: grid; grid-template-columns: 330px minmax(0, 1fr) minmax(0, 1fr); gap: 14px; min-height: 0; }
+.profile-grid > .glass { padding: 14px 16px; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tile { background: rgba(0, 0, 0, 0.2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.tile .value { font-size: 22px; font-weight: 700; }
+.tile .label { font-size: 12px; color: var(--muted); }
+.bars { display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: grid; grid-template-columns: 140px minmax(0, 1fr) 34px; gap: 10px; align-items: center; font-size: 13px; }
+.bar-track { position: relative; height: 12px; background: rgba(255, 255, 255, 0.06); border-radius: 6px; }
+.bar-fill { position: absolute; top: 0; bottom: 0; right: 0; background: linear-gradient(270deg, #0ea5e9, var(--above)); border-radius: 6px; transition: width .4s ease; }
+.bar-median { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #ffffff; border-radius: 1px; }
+.bar-row.missing .name { color: #fdba74; font-weight: 700; }
+.missing-tag { grid-column: 1 / -1; justify-self: start; font-size: 11px; color: #fdba74; background: var(--below-soft); border-radius: 6px; padding: 0 8px; margin-top: -4px; }
+details.group { border-top: 1px solid var(--line); padding: 4px 0; }
+details.group summary { cursor: pointer; padding: 4px 2px; list-style-position: inside; }
+details.group summary .n { color: var(--muted); }
+details.group ul { margin: 2px 0 8px; padding-inline-start: 18px; }
+details.group li { font-size: 13px; padding: 1px 0; }
+details.group li .t { color: var(--muted); font-size: 11px; }
+
+/* ---------- method */
+#view-method { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 18px; }
+.scatter-card { padding: 14px 16px; display: flex; flex-direction: column; min-height: 0; }
+.scatter-card svg { flex: 1; min-height: 0; width: 100%; }
+#scatter .axis { stroke: rgba(255,255,255,.25); }
+#scatter .grid { stroke: rgba(255,255,255,.06); }
+#scatter .tick { fill: var(--muted); font-size: 12px; }
+#scatter .band { fill: rgba(56, 189, 248, 0.12); }
+#scatter .line { fill: none; stroke: var(--above); stroke-width: 2.5; }
+#scatter .pt { cursor: pointer; stroke: rgba(5,10,20,.9); stroke-width: 1; transition: r .15s; }
+#scatter .pt:hover { stroke: #fff; stroke-width: 2; }
+#scatter .pt.selected { stroke: var(--accent); stroke-width: 3; }
+.method-side { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.step { padding: 12px; }
+.step .n { font-family: var(--serif); font-size: 26px; color: var(--accent); line-height: 1; }
+.step p { margin: 4px 0 0; font-size: 13px; }
+.method-side ul { margin: 6px 0 0; padding-inline-start: 18px; font-size: 13px; }
+.method-side li { margin-bottom: 4px; }
+.method-side a { color: var(--accent); }
+
+/* ============================================================ drawer + tooltip */
+.drawer {
+  position: fixed; top: calc(var(--topbar) + 14px); bottom: 14px; inset-inline-end: 14px; width: 340px; z-index: 20;
+  padding: 16px; display: flex; flex-direction: column; gap: 10px;
+  transform: translateX(-120%); transition: transform .3s ease; visibility: hidden;
+}
+.drawer.open { transform: none; visibility: visible; }
+#drawer-body { display: flex; flex-direction: column; gap: 10px; }
+.drawer .close { position: absolute; top: 10px; inset-inline-end: 10px; }
+.tooltip {
+  position: fixed; z-index: 50; pointer-events: none; max-width: 290px; padding: 10px 12px; font-size: 13px; display: none;
+  background: rgba(9, 20, 40, 0.95);
+}
+.tooltip .tt { font-family: var(--serif); font-size: 18px; color: var(--accent); line-height: 1.2; margin-bottom: 4px; }
+.tooltip .row { display: flex; justify-content: space-between; gap: 14px; }
+.tooltip .row b { font-variant-numeric: tabular-nums; }
+
+/* ============================================================ responsive + motion */
+@media (max-width: 1180px) {
+  .findings { grid-template-columns: minmax(0, 1fr); }
+  .profile-grid { grid-template-columns: 300px minmax(0, 1fr); }
+  .profile-grid > .entities { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  html { background: var(--bg-1); }
+  body { overflow: auto; background-attachment: scroll; }
+  .topbar { position: relative; flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 8px; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .top5 ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .drawer { top: auto; }
+  .tabs { margin: 0; width: 100%; overflow-x: auto; }
+  .tab-indicator { display: none; }
+  .site-footer { position: static; height: auto; padding: 10px 12px; white-space: normal; text-align: center; }
+  .tab.active { box-shadow: inset 0 -2px 0 var(--accent); }
+  .search { width: 100%; }
+  main { height: auto; padding-top: 0; }
+  .view { position: relative; inset: auto; padding: 12px; display: none !important; transform: none; }
+  .view.active { display: grid !important; }
+  #view-overview, #view-astrolabe, #view-method, #view-profile .profile-grid { grid-template-columns: minmax(0, 1fr); }
+  #view-map.view.active { display: block !important; height: 80vh; }
+  .hero-title { font-size: 48px; }
+  .map-controls { width: auto; inset-inline: 10px; }
+  .dock { display: none; }
+  .map-note { display: none; }
+  .drawer { inset-inline: 10px; width: auto; top: auto; max-height: 75vh; }
+  .profile-head .nav { margin: 0; width: 100%; }
+  .region-chart svg { height: 420px; }
+  .scatter-card svg { height: 380px; }
+  #astro-svg { height: auto; aspect-ratio: 1; flex: none; }
+  .astro-stage .hint, .astro-legend { position: static; max-width: none; margin-bottom: 6px; }
+  .astro-legend { flex-direction: row; }
+}
+/* short desktop screens (laptops with browser chrome / display scaling): compact the overview */
+@media (min-width: 901px) and (max-height: 860px) {
+  .view { padding-top: 12px; padding-bottom: 12px; }
+  .hero { gap: 10px; }
+  .hero-title { font-size: 52px; }
+  .hero-tagline { font-size: 18px; }
+  .hero-method { font-size: 13px; }
+  .finding { padding: 10px 12px; }
+  .finding .t { font-size: 13px; }
+  .top5 { padding: 8px 12px; }
+  .top5 button { padding: 6px 8px; }
+  .top5 .pc { font-size: 15px; }
+  .kpi { padding: 8px 12px; }
+  .kpi .value { font-size: 24px; }
+  .kpi .label { font-size: 12px; }
+}
+@media (min-width: 901px) and (max-height: 700px) {
+  .hero-method, .top5 .bar { display: none; }
+  .hero-title { font-size: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+      <circle cx="17" cy="17" r="15" fill="none" stroke="#7dd3fc" stroke-width="1.5"/>
+      <path d="M17 5 L20 17 L17 29 L14 17 Z" fill="#ffffff"/><path d="M17 5 L20 17 L14 17 Z" fill="#f97316"/>
+    </svg>
+    <div><div class="name">بوصلة العطاء</div><div class="tag">أين يذهب العطاء أولًا؟</div></div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="الصفحات">
+    <button class="tab" role="tab" data-view="overview">الرئيسية</button>
+    <button class="tab" role="tab" data-view="map">الخريطة</button>
+    <button class="tab" role="tab" data-view="astrolabe">الإسطرلاب</button>
+    <button class="tab" role="tab" data-view="profile">ملف المحافظة</button>
+    <button class="tab" role="tab" data-view="method">المنهجية</button>
+    <span class="tab-indicator no-anim" aria-hidden="true"></span>
+  </nav>
+  <div class="search">
+    <input class="field" id="search" type="search" placeholder="ابحث عن محافظة…" autocomplete="off" aria-label="ابحث عن محافظة">
+    <ul class="suggestions glass glass-solid" id="suggestions" role="listbox" hidden></ul>
+  </div>
+</header>
+
+<main>
+  <!-- ======================================================== overview -->
+  <section class="view" id="view-overview" role="tabpanel" aria-label="الرئيسية">
+    <div class="hero scroll">
+      <div class="eyebrow">NONPROFIT COVERAGE INTELLIGENCE · مؤشر تغطية القطاع غير الربحي</div>
+      <h1 class="hero-title">بوصلة العطاء</h1>
+      <p class="hero-tagline">أين يذهب العطاء أولًا؟</p>
+      <p class="hero-method">المتوقع = عدد الكيانات المعتاد لمحافظة بنفس الحجم، من نموذج انحدار على 150 محافظة. المحافظات التي تقع تحت النطاق الطبيعي بوضوح هي أولوية لدراسة الاحتياج وتوجيه المنح.</p>
+      <div class="cta">
+        <a class="btn primary" href="#map" style="text-decoration:none">استكشف الخريطة</a>
+        <a class="btn" href="#astrolabe" style="text-decoration:none;color:inherit">الإسطرلاب</a>
+      </div>
+      <div class="findings" id="findings"></div>
+      <div class="top5 glass" id="top5"></div>
+      <div class="kpis" id="kpis"></div>
+    </div>
+    <div class="overview-side">
+      <div class="region-chart glass">
+        <div class="eyebrow">REGIONS · المناطق</div>
+        <h3>الموجود من المتوقع حسب المنطقة</h3>
+        <svg id="region-chart" class="chart" role="img" aria-label="الموجود من المتوقع حسب المنطقة"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== map -->
+  <section class="view" id="view-map" role="tabpanel" aria-label="الخريطة">
+    <svg id="map-svg" class="chart" role="img" aria-label="خريطة المحافظات"></svg>
+    <div class="float glass glass-solid map-controls">
+      <div class="eyebrow">MAP · الخريطة</div>
+      <div class="toggle" role="group" aria-label="طريقة التلوين">
+        <button type="button" data-mode="status" aria-pressed="true">الحالة</button>
+        <button type="button" data-mode="ratio" aria-pressed="false">نسبة الموجود من المتوقع</button>
+      </div>
+      <div class="legend" id="map-legend"></div>
+      <select class="field region-filter" aria-label="تصفية حسب المنطقة"></select>
+    </div>
+    <div class="float glass glass-solid zoom" role="group" aria-label="التكبير">
+      <button class="btn icon-btn" id="zoom-in" aria-label="تكبير">+</button>
+      <button class="btn icon-btn" id="zoom-out" aria-label="تصغير">−</button>
+      <button class="btn icon-btn" id="zoom-reset" aria-label="إعادة الضبط">⟲</button>
+    </div>
+    <div class="float glass glass-solid map-note">مساحة المحافظة لا تعكس عدد سكانها. الحدود من geoBoundaries (OpenStreetMap) وقد لا تطابق الحدود الرسمية في المناطق الصحراوية.</div>
+    <div class="float glass glass-solid dock" id="dock">
+      <div class="dock-head">
+        <strong class="serif" style="color:var(--accent);font-size:18px">محافظات الأولوية</strong>
+        <button class="btn icon-btn" id="dock-toggle" aria-expanded="true" aria-label="طي القائمة">⌃</button>
+      </div>
+      <ul class="plist scroll" id="map-plist"></ul>
+    </div>
+  </section>
+
+  <!-- ======================================================== astrolabe -->
+  <section class="view" id="view-astrolabe" role="tabpanel" aria-label="الإسطرلاب">
+    <div class="astro-stage glass">
+      <div class="hint">انقري منطقة في الحلقة الخارجية، ثم محافظة في الحلقة الوسطى. الأسهم ← → تنقل داخل الحلقة.</div>
+      <div class="legend astro-legend" id="astro-legend"></div>
+      <svg id="astro-svg" class="chart" viewBox="-335 -335 670 670" role="group" aria-label="الإسطرلاب: المنطقة ثم المحافظة ثم نوع الكيان"></svg>
+    </div>
+    <aside class="astro-panel glass scroll" id="astro-panel" aria-live="polite"></aside>
+  </section>
+
+  <!-- ======================================================== profile -->
+  <section class="view" id="view-profile" role="tabpanel" aria-label="ملف المحافظة">
+    <div class="profile-head glass" id="profile-head"></div>
+    <div class="profile-grid">
+      <div class="glass scroll" id="profile-summary"></div>
+      <div class="glass scroll" id="profile-cats"></div>
+      <div class="glass entities" id="profile-entities"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================== method -->
+  <section class="view" id="view-method" role="tabpanel" aria-label="المنهجية">
+    <div class="scatter-card glass">
+      <div class="eyebrow">THE MODEL · النموذج</div>
+      <h3>عدد الكيانات مقابل السكان في 150 محافظة</h3>
+      <div class="legend" id="scatter-legend" style="margin:4px 0"></div>
+      <svg id="scatter" class="chart" role="img" aria-label="عدد الكيانات مقابل السكان"></svg>
+    </div>
+    <div class="method-side scroll">
+      <div class="steps" id="steps"></div>
+      <div class="glass" style="padding:14px">
+        <h3>المصادر</h3>
+        <ul>
+          <li>سجل الكيانات: <a href="https://open.data.gov.sa" target="_blank" rel="noopener">منصة البيانات المفتوحة</a>، المركز الوطني لتنمية القطاع غير الربحي (13 ملفًا، ملف لكل منطقة).</li>
+          <li>السكان: تعداد 2022 (الهيئة العامة للإحصاء) عبر <a href="https://www.citypopulation.de/en/saudiarabia/admin/" target="_blank" rel="noopener">citypopulation.de</a>.</li>
+          <li>الحدود: <a href="https://www.geoboundaries.org/" target="_blank" rel="noopener">geoBoundaries</a> (SAU ADM2، ADM1).</li>
+        </ul>
+      </div>
+      <div class="glass" style="padding:14px">
+        <h3>حدود التحليل</h3>
+        <ul id="limitations"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="site-footer">هاكاثون تحليل البيانات في القطاع غير الربحي · جمعية كفاءات الأهلية (Kafaat Civil Association) · 2026</footer>
+
+<aside class="drawer glass glass-solid scroll" id="drawer" aria-label="تفاصيل المحافظة" aria-hidden="true">
+  <button class="btn icon-btn close" id="drawer-close" aria-label="إغلاق">✕</button>
+  <div id="drawer-body"></div>
+</aside>
+<div class="tooltip glass" id="tooltip" role="tooltip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+
+/* ============================================================ utils */
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const svgEl = (tag, attrs = {}) => { const e = document.createElementNS(SVG_NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+const fmt = n => Number(n).toLocaleString('en-US');
+const norm = s => s.replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ROYAL = 'منشأة بأمر ملكي';
+
+const STATUS = {
+  'أقل من المتوقع بوضوح': { color: '#f97316', cls: 'below', short: 'أقل من المتوقع' },
+  'ضمن الطبيعي': { color: '#33445f', cls: 'normal', short: 'ضمن الطبيعي' },
+  'أعلى من المتوقع بوضوح': { color: '#38bdf8', cls: 'above', short: 'أعلى من المتوقع' },
+};
+// Diverging bins: coral (big gap) -> slate (as expected) -> blue (above)
+const RATIO_BINS = [
+  { max: 40, color: '#ff7a1a', label: 'أقل من 40%' },
+  { max: 60, color: '#f59e5b', label: 'من 40 إلى 60%' },
+  { max: 80, color: '#8f6a5a', label: 'من 60 إلى 80%' },
+  { max: 125, color: '#33445f', label: 'من 80 إلى 125%' },
+  { max: 167, color: '#2f6f99', label: 'من 125 إلى 167%' },
+  { max: 250, color: '#38bdf8', label: 'من 167 إلى 250%' },
+  { max: Infinity, color: '#a5e8ff', label: 'أكثر من 250%' },
+];
+
+const govs = DATA.govs;
+const priorityIdx = govs.map((g, i) => i).filter(i => govs[i].rank).sort((a, b) => govs[a].rank - govs[b].rank);
+const regionNames = DATA.regions.map(r => r.name);
+
+const tooltip = $('#tooltip');
+function placeTooltip(html, x, y) {
+  tooltip.innerHTML = html;
+  tooltip.style.display = 'block';
+  const pad = 14, w = tooltip.offsetWidth, h = tooltip.offsetHeight;
+  let left = x - w - pad, top = y + pad;          // RTL: prefer the left of the cursor
+  if (left < 6) left = x + pad;
+  if (left + w > innerWidth - 6) left = innerWidth - w - 6;
+  if (top + h > innerHeight - 6) top = y - h - pad;
+  tooltip.style.left = Math.max(6, left) + 'px';
+  tooltip.style.top = Math.max(6, top) + 'px';
+}
+const hideTooltip = () => { tooltip.style.display = 'none'; };
+function topCategories(g, n) {
+  return g.cats.map((c, k) => [DATA.categories[k], c]).filter(x => x[1] > 0)
+    .sort((a, b) => b[1] - a[1]).slice(0, n).map(([c, v]) => `${c} (${v})`).join('، ');
+}
+function govTooltip(g) {
+  return `<div class="tt">${esc(g.name)}</div><div class="muted" style="margin:-2px 0 6px">${esc(g.region)}</div>
+    <div class="row"><span>عدد الكيانات</span><b>${fmt(g.npo)}</b></div>
+    <div class="row"><span>المتوقع لحجمها</span><b>${fmt(g.expected)}</b></div>
+    <div class="row"><span>الموجود من المتوقع</span><b>${g.pct}%</b></div>
+    <div class="row" style="margin-top:4px"><span>الحالة</span><span class="badge ${STATUS[g.status].cls}">${STATUS[g.status].short}</span></div>
+    ${g.rank ? `<div class="row" style="margin-top:4px"><span>الأولوية</span><span class="badge gold">#${g.rank} · ${g.level}</span></div>` : ''}
+    ${g.npo ? `<div class="muted" style="margin-top:6px;font-size:12px">أكثر الأنواع: ${esc(topCategories(g, 3))}</div>` : ''}`;
+}
+function countUp(el, target, decimals = 0) {
+  if (REDUCED) { el.textContent = decimals ? target.toFixed(decimals) : fmt(target); return; }
+  const start = performance.now(), dur = 900;
+  const step = now => {
+    const t = Math.min(1, (now - start) / dur), v = target * (1 - Math.pow(1 - t, 3));
+    el.textContent = decimals ? v.toFixed(decimals) : fmt(Math.round(v));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+// Semicircle gauge 0–200% with the normal range band and a needle
+function gauge(g, w) {
+  const h = w * 0.74, cx = w / 2, cy = w * 0.58, r = w * 0.4, sw = w * 0.07;
+  const ang = p => Math.PI - Math.min(Math.max(p, 0), 200) / 200 * Math.PI;
+  const pt = (p, rr) => [cx + rr * Math.cos(ang(p)), cy - rr * Math.sin(ang(p))];
+  const arc = (a, b, color, width) => {
+    const [x1, y1] = pt(a, r), [x2, y2] = pt(b, r);
+    return `<path d="M${x1},${y1} A${r},${r} 0 0 1 ${x2},${y2}" stroke="${color}" stroke-width="${width}" fill="none" stroke-linecap="round"/>`;
+  };
+  const [nx, ny] = pt(g.pct, r * 0.92);
+  const [lx, ly] = pt(100, r + sw * 0.9);
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" role="img" aria-label="الموجود ${g.pct}% من المتوقع">
+    ${arc(0, 200, 'rgba(255,255,255,.08)', sw)}
+    ${arc(Math.max(0, g.lowPct), Math.min(200, g.highPct), 'rgba(56,189,248,.35)', sw)}
+    ${arc(0, Math.min(g.pct, 200), STATUS[g.status].color, sw * 0.45)}
+    <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#f1f5f9" stroke-width="${w * 0.012}" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="${w * 0.025}" fill="#7dd3fc"/>
+    <text x="${lx}" y="${ly - 4}" fill="#ffffff" font-size="${w * 0.04}" text-anchor="middle">100%</text>
+    <text x="${cx}" y="${cy + w * 0.09}" fill="#f1f5f9" font-size="${w * 0.1}" font-weight="700" text-anchor="middle">${g.pct}%</text>
+  </svg>
+  <div class="muted" style="font-size:12px;text-align:center;margin-top:-4px">الشريط الأزرق = النطاق الطبيعي لمحافظة بحجمها: من ${g.lowPct}% إلى ${g.highPct}% من المتوقع</div>`;
+}
+
+/* ============================================================ state */
+const state = { view: 'overview', selected: priorityIdx[0], region: '', mode: 'status' };
+const listeners = [];
+const onChange = fn => listeners.push(fn);
+function setState(patch) { Object.assign(state, patch); listeners.forEach(fn => fn(patch)); }
+
+/* ============================================================ router */
+const VIEWS = ['overview', 'map', 'astrolabe', 'profile', 'method'];
+function route() {
+  let v = (location.hash || '#overview').slice(1);
+  if (v === 'compass') { history.replaceState(null, '', '#astrolabe'); v = 'astrolabe'; }   // old link
+  const view = VIEWS.includes(v) ? v : 'overview';
+  $$('.view').forEach(el => el.classList.toggle('active', el.id === 'view-' + view));
+  window.scrollTo(0, 0);   // views are full-screen panels; never keep a document scroll offset
+  $$('.tab').forEach(t => {
+    const on = t.dataset.view === view;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', String(on));
+    on ? t.setAttribute('aria-current', 'page') : t.removeAttribute('aria-current');
+    t.tabIndex = on ? 0 : -1;
+  });
+  moveIndicator();
+  if (view !== 'map') closeDrawer();
+  hideTooltip();
+  state.view = view;
+  if (view === 'profile') renderProfile();
+  if (view === 'overview') renderRegionChart();
+  if (view === 'method') renderScatter();
+  if (view === 'astrolabe') {
+    const first = !astro.built;
+    if (first) buildAstrolabe();
+    syncAstrolabe(!first);
+  }
+}
+// The underline is placed from geometry (left:0 + translateX), so it works in RTL and after fonts load
+function moveIndicator() {
+  const nav = $('.tabs'), active = $('.tab.active'), ind = $('.tab-indicator');
+  if (!active) return;
+  const n = nav.getBoundingClientRect(), t = active.getBoundingClientRect();
+  ind.style.width = t.width + 'px';
+  ind.style.transform = `translateX(${t.left - n.left}px)`;
+}
+// first placement (load, fonts, resize) jumps into place; only tab changes slide
+function placeIndicatorNow() {
+  const ind = $('.tab-indicator');
+  ind.classList.add('no-anim'); moveIndicator();
+  requestAnimationFrame(() => requestAnimationFrame(() => ind.classList.remove('no-anim')));
+}
+if (window.ResizeObserver) new ResizeObserver(placeIndicatorNow).observe($('.tabs'));
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeIndicatorNow);
+addEventListener('load', placeIndicatorNow);
+$$('.tab').forEach(t => t.addEventListener('click', () => { location.hash = t.dataset.view; }));
+$('.tabs').addEventListener('keydown', e => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+  const tabs = $$('.tab'), i = tabs.indexOf(document.activeElement);
+  if (i < 0) return;
+  // RTL: ArrowLeft moves to the next tab
+  let j = e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : (i + (e.key === 'ArrowLeft' ? 1 : -1) + tabs.length) % tabs.length;
+  tabs[j].focus(); location.hash = tabs[j].dataset.view; e.preventDefault();
+});
+addEventListener('hashchange', route);
+addEventListener('resize', () => { moveIndicator(); if (state.view === 'overview') renderRegionChart(); if (state.view === 'method') renderScatter(); });
+
+/* ============================================================ overview */
+function renderOverview() {
+  const k = DATA.kpis;
+  $('#kpis').innerHTML = [
+    ['governorates', 'محافظة', ''], ['entities', 'كيانًا غير ربحي محسوبًا على المحافظات', ''],
+    ['priority', 'محافظة أولوية (أقل من المتوقع بوضوح)', 'accent'], ['national_rate', 'كيانًا لكل 100 ألف نسمة (معدل المملكة)', ''],
+  ].map(([key, label, cls]) => `<div class="kpi glass ${cls}"><div class="value num" data-kpi="${key}">0</div><div class="label">${label}</div></div>`).join('');
+  $$('[data-kpi]').forEach(el => countUp(el, k[el.dataset.kpi], el.dataset.kpi === 'national_rate' ? 1 : 0));
+
+  // findings computed from the data
+  const top = priorityIdx.slice(0, 3).map(i => `<b>${esc(govs[i].name)}</b> (${govs[i].pct}%)`).join('، ');
+  const lowRegions = DATA.regions.filter(r => r.pct < 100).sort((a, b) => a.pct - b.pct)
+    .map(r => `<b>${esc(r.name)}</b> ${r.pct}%`).join('، ');
+  const missingCount = {};
+  priorityIdx.forEach(i => govs[i].missing.forEach(c => { missingCount[c] = (missingCount[c] || 0) + 1; }));
+  const missingTop = Object.entries(missingCount).sort((a, b) => b[1] - a[1]);
+  const first = missingTop[0], healthCount = missingCount['الصحة'] || 0;
+  const healthGovs = priorityIdx.filter(i => govs[i].missing.includes('الصحة')).map(i => govs[i].name).join('، ');
+  $('#top5').innerHTML = `<div class="eyebrow">TOP PRIORITIES · أعلى الأولويات</div>
+    <ol>${priorityIdx.slice(0, 5).map(i => `<li><button type="button" data-i="${i}" aria-label="افتح ملف ${esc(govs[i].name)}">
+      <span class="rg">#${govs[i].rank} · ${esc(govs[i].region)}</span><span class="nm">${esc(govs[i].name)}</span>
+      <span class="pc num">${govs[i].pct}%</span><span class="bar"><i style="width:${Math.min(govs[i].pct, 100)}%"></i></span></button></li>`).join('')}</ol>`;
+  $('#top5').addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) { setState({ selected: +b.dataset.i }); location.hash = 'profile'; } });
+  $('#findings').innerHTML = `
+    <div class="finding glass"><div class="k">01 · أولويات قصوى</div><div class="t">أشد المحافظات نقصًا: ${top} من المتوقع لحجمها.</div></div>
+    <div class="finding glass"><div class="k">02 · فجوة إقليمية</div><div class="t">مناطق كاملة أقل من المتوقع: ${lowRegions}.</div></div>
+    <div class="finding glass"><div class="k">03 · الأنواع الغائبة</div><div class="t">أكثر الأنواع غيابًا رغم شيوعها للحجم: <b>${esc(first[0])}</b> (${first[1]} من ${priorityIdx.length})${healthCount ? `؛ والصحة غائبة في ${esc(healthGovs)}` : ''}.</div></div>`;
+
+}
+function renderRegionChart() {
+  // region bar chart (sorted, 100% reference)
+  const svg = $('#region-chart'), regions = [...DATA.regions].sort((a, b) => a.pct - b.pct);
+  const W = Math.max(svg.clientWidth, 320), H = Math.max(svg.clientHeight, 420);
+  const rowH = (H - 30) / regions.length, labelW = W < 500 ? 105 : 130, maxPct = Math.max(...regions.map(r => r.pct)) * 1.12;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const x = p => W - labelW - (p / maxPct) * (W - labelW - 44);   // bars grow right-to-left
+  const x100 = x(100);
+  let html = `<line x1="${x100}" y1="0" x2="${x100}" y2="${H - 22}" stroke="#f1f5f9" stroke-opacity=".6" stroke-dasharray="4 4"/>
+    <text x="${x100}" y="${H - 6}" fill="#f1f5f9" font-size="12" text-anchor="middle">100% = المتوقع</text>`;
+  regions.forEach((r, i) => {
+    const y = i * rowH, color = r.pct < 100 ? '#f97316' : '#38bdf8';
+    html += `<g class="rbar" tabindex="0" role="button" data-region="${esc(r.name)}" aria-label="${esc(r.name)}: ${r.pct}% من المتوقع">
+      <text x="${W - 4}" y="${y + rowH * 0.5 + 5}" fill="#94a3b8" font-size="14" text-anchor="end">${esc(r.name)}</text>
+      <rect class="bar" x="${x(r.pct)}" y="${y + rowH * 0.2}" width="${W - labelW - x(r.pct)}" height="${rowH * 0.6}" rx="4" fill="${color}"/>
+      <text x="${x(r.pct) - 6}" y="${y + rowH * 0.5 + 4}" fill="#f1f5f9" font-size="12" text-anchor="end" class="num">${r.pct}%</text>
+    </g>`;
+  });
+  svg.innerHTML = html;
+  const openRegion = g => { setState({ region: g.dataset.region }); location.hash = 'map'; zoomToRegion(g.dataset.region); };
+  $$('.rbar', svg).forEach(g => {
+    const r = DATA.regions.find(r => r.name === g.dataset.region);
+    g.addEventListener('mousemove', e => placeTooltip(`<div class="tt">${esc(r.name)}</div>
+      <div class="row"><span>الموجود من المتوقع</span><b>${r.pct}%</b></div>
+      <div class="row"><span>محافظات أولوية</span><b>${r.priority}</b></div>
+      <div class="muted" style="font-size:12px;margin-top:4px">اضغط لفتح الخريطة على هذه المنطقة</div>`, e.clientX, e.clientY));
+    g.addEventListener('mouseleave', hideTooltip);
+    g.addEventListener('click', () => { hideTooltip(); openRegion(g); });
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openRegion(g); } });
+  });
+}
+
+/* ============================================================ shared controls: region filter + priority lists */
+function fillRegionFilters() {
+  const opts = '<option value="">كل المناطق</option>' + [...regionNames].sort((a, b) => a.localeCompare(b, 'ar')).map(r => `<option>${esc(r)}</option>`).join('');
+  $$('.region-filter').forEach(sel => {
+    sel.innerHTML = opts;
+    sel.addEventListener('change', () => { setState({ region: sel.value }); if (state.view === 'map') zoomToRegion(sel.value); });
+  });
+}
+onChange(p => { if ('region' in p) $$('.region-filter').forEach(s => { s.value = state.region; }); });
+
+function renderPriorityList() {
+  const items = priorityIdx.filter(i => !state.region || govs[i].region === state.region);
+  $('#map-plist').innerHTML = items.length ? items.map(i => {
+    const g = govs[i];
+    return `<li><button type="button" data-i="${i}" class="${state.selected === i ? 'selected' : ''}">
+      <span class="rank num">${g.rank}</span>
+      <span>${esc(g.name)}<span class="r">${esc(g.region)}</span></span>
+      <span style="text-align:left"><span class="pct num">${g.pct}%</span><span class="lvl">${g.level}</span></span>
+    </button></li>`;
+  }).join('') : '<li class="muted" style="padding:10px">لا توجد محافظات أولوية في هذه المنطقة.</li>';
+}
+$('#map-plist').addEventListener('click', e => {
+  const b = e.target.closest('button[data-i]');
+  if (!b) return;
+  const i = +b.dataset.i;
+  setState({ selected: i }); zoomToGov(i); openDrawer(i);
+});
+$('#dock-toggle').addEventListener('click', e => {
+  const dock = $('#dock'), collapsed = dock.classList.toggle('collapsed');
+  e.currentTarget.setAttribute('aria-expanded', String(!collapsed));
+  e.currentTarget.textContent = collapsed ? '⌄' : '⌃';
+});
+onChange(p => { if ('region' in p || 'selected' in p) renderPriorityList(); });
+
+/* ============================================================ map */
+const mapSvg = $('#map-svg');
+const [, , VB_W, VB_H] = DATA.viewBox.split(' ').map(Number);
+const FULL = [0, 0, VB_W, VB_H];
+let vb = [...FULL];
+const mapPaths = new Map();
+const markers = [];
+const regionBoxes = {};
+
+function buildMap() {
+  mapSvg.setAttribute('viewBox', FULL.join(' '));
+  const gGov = svgEl('g'), gReg = svgEl('g'), gMark = svgEl('g');
+  govs.forEach((g, i) => {
+    if (!g.path) return;
+    const p = svgEl('path', { d: g.path, class: 'gov', 'data-i': i, 'aria-label': `${g.name} – ${g.region}` });
+    gGov.appendChild(p); mapPaths.set(i, p);
+  });
+  DATA.regionPaths.forEach(d => gReg.appendChild(svgEl('path', { d, class: 'region' })));
+  mapSvg.append(gGov, gReg, gMark);
+  // bounding boxes (user units) for zooming, and pulsing markers for priority governorates
+  // bounding boxes come precomputed from the notebook (getBBox fails while a view is display:none)
+  mapPaths.forEach((p, i) => {
+    const g = govs[i], b = { x: g.bbox[0], y: g.bbox[1], width: g.bbox[2], height: g.bbox[3] };
+    const box = regionBoxes[g.region] || (regionBoxes[g.region] = { x1: Infinity, y1: Infinity, x2: -Infinity, y2: -Infinity });
+    box.x1 = Math.min(box.x1, b.x); box.y1 = Math.min(box.y1, b.y); box.x2 = Math.max(box.x2, b.x + b.width); box.y2 = Math.max(box.y2, b.y + b.height);
+    if (g.rank) {
+      const cx = b.x + b.width / 2, cy = b.y + b.height / 2;
+      const ring = svgEl('circle', { cx, cy, r: 6, class: 'marker-ring' });
+      const dot = svgEl('circle', { cx, cy, r: 3, class: 'marker' });
+      gMark.append(ring, dot); markers.push(ring, dot);
+    }
+  });
+}
+function paintMap() {
+  mapPaths.forEach((p, i) => {
+    const g = govs[i];
+    p.setAttribute('fill', state.mode === 'status' ? STATUS[g.status].color : RATIO_BINS.find(b => g.pct < b.max).color);
+    p.classList.toggle('dim', !!state.region && g.region !== state.region);
+    p.classList.toggle('selected', state.selected === i);
+  });
+  const sel = mapPaths.get(state.selected);
+  if (sel) sel.parentNode.appendChild(sel);   // selected outline on top
+  $('#map-legend').innerHTML = state.mode === 'status'
+    ? Object.values(STATUS).map(s => `<span><i class="sw" style="background:${s.color}"></i>${s.short}</span>`).join('') + '<span><i class="sw" style="background:#f97316;border-radius:50%"></i>محافظة أولوية</span>'
+    : RATIO_BINS.map(b => `<span><i class="sw" style="background:${b.color}"></i>${b.label}</span>`).join('');
+}
+onChange(p => { if ('mode' in p || 'region' in p || 'selected' in p) paintMap(); });
+$$('#view-map .toggle button').forEach(b => b.addEventListener('click', () => {
+  $$('#view-map .toggle button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  setState({ mode: b.dataset.mode });
+}));
+
+// ---- pan & zoom (viewBox animation)
+function applyVB(v) {
+  vb = v; mapSvg.setAttribute('viewBox', v.map(n => n.toFixed(1)).join(' '));
+  const k = v[2] / VB_W;   // keep markers the same size on screen
+  markers.forEach(m => m.setAttribute('r', (m.classList.contains('marker') ? 3.2 : 7) * Math.max(k, 0.12)));
+}
+let anim = null;
+function animateVB(target, ms = 380) {
+  cancelAnimationFrame(anim);
+  if (REDUCED) { applyVB(target); return; }
+  const from = [...vb], t0 = performance.now();
+  const step = now => {
+    const t = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - t, 3);
+    applyVB(from.map((f, k) => f + (target[k] - f) * e));
+    if (t < 1) anim = requestAnimationFrame(step);
+  };
+  anim = requestAnimationFrame(step);
+}
+function fitBox(x, y, w, h, pad = 0.12, minW = VB_W / 10) {
+  const W = Math.max(w * (1 + 2 * pad), minW), H = Math.max(h * (1 + 2 * pad), minW * VB_H / VB_W);
+  return [x + w / 2 - W / 2, y + h / 2 - H / 2, W, H];
+}
+function zoomToRegion(region) {
+  if (!region) { animateVB([...FULL]); return; }
+  const b = regionBoxes[region];
+  if (b) animateVB(fitBox(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1));
+}
+function zoomToGov(i) {
+  if (!govs[i].bbox) return;
+  const [x, y, w, h] = govs[i].bbox;
+  animateVB(fitBox(x, y, w, h, 1.2, VB_W / 5));
+}
+function zoomBy(f, cx, cy) {
+  const W = Math.min(VB_W * 1.2, Math.max(VB_W / 14, vb[2] * f)), H = W * vb[3] / vb[2];
+  cx = cx ?? vb[0] + vb[2] / 2; cy = cy ?? vb[1] + vb[3] / 2;
+  return [cx - (cx - vb[0]) * W / vb[2], cy - (cy - vb[1]) * H / vb[3], W, H];
+}
+const toSvg = (cx, cy) => { const p = new DOMPoint(cx, cy).matrixTransform(mapSvg.getScreenCTM().inverse()); return [p.x, p.y]; };
+mapSvg.addEventListener('wheel', e => { e.preventDefault(); const [x, y] = toSvg(e.clientX, e.clientY); applyVB(zoomBy(e.deltaY > 0 ? 1.18 : 1 / 1.18, x, y)); }, { passive: false });
+$('#zoom-in').addEventListener('click', () => animateVB(zoomBy(1 / 1.5)));
+$('#zoom-out').addEventListener('click', () => animateVB(zoomBy(1.5)));
+$('#zoom-reset').addEventListener('click', () => animateVB([...FULL]));
+let drag = null;
+mapSvg.addEventListener('pointerdown', e => {
+  // keep the screen->svg matrix of the drag start, so deltas are in the original viewBox units
+  const inv = mapSvg.getScreenCTM().inverse();
+  drag = { x: e.clientX, y: e.clientY, vb: [...vb], inv, start: new DOMPoint(e.clientX, e.clientY).matrixTransform(inv), moved: false };
+});
+addEventListener('pointermove', e => {
+  if (!drag || !(e.buttons & 1)) return;
+  if (!drag.moved && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 4) return;
+  drag.moved = true; mapSvg.classList.add('dragging'); hideTooltip();
+  const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(drag.inv);
+  applyVB([drag.vb[0] - (p.x - drag.start.x), drag.vb[1] - (p.y - drag.start.y), drag.vb[2], drag.vb[3]]);
+});
+addEventListener('pointerup', () => { setTimeout(() => { drag = null; }, 0); mapSvg.classList.remove('dragging'); });
+
+mapSvg.addEventListener('mousemove', e => {
+  if (drag && drag.moved) return;
+  const t = e.target.closest('path.gov');
+  t ? placeTooltip(govTooltip(govs[+t.dataset.i]), e.clientX, e.clientY) : hideTooltip();
+});
+mapSvg.addEventListener('mouseleave', hideTooltip);
+mapSvg.addEventListener('click', e => {
+  if (drag && drag.moved) return;
+  const t = e.target.closest('path.gov');
+  if (!t) return;
+  const i = +t.dataset.i;
+  setState({ selected: i }); openDrawer(i);
+});
+
+/* ============================================================ astrolabe */
+// Three rings drill down region -> governorate -> entity type. The outer and middle rings rotate so the
+// selection sits at the top, under the alidade. Angles are measured clockwise from the top.
+const aSvg = $('#astro-svg');
+const RATIO5 = [
+  { max: 50, color: '#f97316', ink: '#0a1628', label: 'أقل من 50%' },
+  { max: 80, color: '#fdba74', ink: '#0a1628', label: 'من 50 إلى 80%' },
+  { max: 125, color: '#33445f', ink: '#f1f5f9', label: 'من 80 إلى 125%' },
+  { max: 200, color: '#7dd3fc', ink: '#0a1628', label: 'من 125 إلى 200%' },
+  { max: Infinity, color: '#0ea5e9', ink: '#05080d', label: 'أكثر من 200%' },
+];
+const ratioBin = p => RATIO5.find(b => p < b.max);
+const TYPE_SHORT = {
+  'الخدمات الاجتماعية': 'الاجتماعية', 'التنمية والإسكان': 'التنمية', 'الدعوة والتعليم الديني': 'الدعوة', 'الصحة': 'الصحة',
+  'دعم العمل الخيري': 'دعم الخير', 'التعليم والأبحاث': 'التعليم', 'الثقافة والترفيه': 'الثقافة', 'البيئة': 'البيئة',
+  'الروابط المهنية': 'المهنية', 'التأييد والمؤازرة': 'التأييد',
+};
+const RING = { bezel: 322, outer: [258, 312], mid: [170, 250], inner: [72, 160], hub: 60 };
+const astroRegions = [...DATA.regions].sort((a, b) => a.pct - b.pct);
+const govsOf = name => govs.map((g, i) => i).filter(i => govs[i].region === name).sort((a, b) => govs[a].pct - govs[b].pct);
+const pol = (r, deg) => { const a = (deg - 90) * Math.PI / 180; return [r * Math.cos(a), r * Math.sin(a)]; };
+function arcPath(r0, r1, a0, a1) {
+  const [x0, y0] = pol(r1, a0), [x1, y1] = pol(r1, a1), [x2, y2] = pol(r0, a1), [x3, y3] = pol(r0, a0), L = a1 - a0 > 180 ? 1 : 0;
+  return `M${x0},${y0} A${r1},${r1} 0 ${L} 1 ${x1},${y1} L${x2},${y2} A${r0},${r0} 0 ${L} 0 ${x3},${y3}Z`;
+}
+const astro = { built: false, region: null, members: [], gov: null, rot: { outer: 0, mid: 0 }, raf: {} };
+const groups = {};
+
+function buildAstrolabe() {
+  aSvg.innerHTML = '';
+  // bezel with fine ticks
+  aSvg.appendChild(svgEl('circle', { r: RING.bezel + 6, fill: 'rgba(5,10,20,.55)', stroke: 'none' }));
+  aSvg.appendChild(svgEl('circle', { r: RING.bezel, fill: 'none', stroke: '#7dd3fc', 'stroke-opacity': 0.7, 'stroke-width': 1.5 }));
+  for (let i = 0; i < 120; i++) {
+    const d = i * 3, L = i % 15 === 0 ? 11 : i % 5 === 0 ? 7 : 4;
+    const [x1, y1] = pol(RING.bezel, d), [x2, y2] = pol(RING.bezel - L, d);
+    aSvg.appendChild(svgEl('line', { x1, y1, x2, y2, stroke: '#7dd3fc', 'stroke-opacity': i % 15 === 0 ? 0.8 : 0.35, 'stroke-width': 1 }));
+  }
+  groups.outer = svgEl('g', { class: 'ring-outer' });
+  groups.mid = svgEl('g', { class: 'ring-mid' });
+  groups.inner = svgEl('g', { class: 'ring-inner' });
+  groups.ali = svgEl('g', { class: 'alidade' });
+  groups.hub = svgEl('g', { class: 'hub' });
+  aSvg.append(groups.outer, groups.mid, groups.inner, groups.ali, groups.hub);
+
+  // outer ring: 13 regions, equal segments, lowest ratio first
+  const st = 360 / astroRegions.length;
+  astroRegions.forEach((r, k) => {
+    const a0 = k * st + 0.8, a1 = (k + 1) * st - 0.8, mid = (a0 + a1) / 2, bin = ratioBin(r.pct);
+    groups.outer.appendChild(svgEl('path', { d: arcPath(RING.outer[0], RING.outer[1], a0, a1), fill: bin.color, class: 'seg', 'data-kind': 'region', 'data-k': k,
+      tabindex: 0, role: 'button', 'aria-label': `${r.name}: ${r.pct}% من المتوقع` }));
+    const [x, y] = pol((RING.outer[0] + RING.outer[1]) / 2, mid);
+    const t = svgEl('text', { x, y, 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': 12.5, 'font-weight': 700, fill: bin.ink,
+      'data-base': mid, 'data-orient': 'tangent' });
+    t.textContent = r.name; groups.outer.appendChild(t);
+  });
+
+  // alidade: a thin ruler from the hub to the bezel at the top, with two pointers
+  groups.ali.innerHTML = `<line x1="0" y1="${-RING.hub}" x2="0" y2="${-RING.inner[1] - 2}" stroke="#7dd3fc" stroke-width="2.5"/>
+    <path d="M0,${-RING.mid[0] + 2} l-7,9 h14 Z" fill="#7dd3fc"/>
+    <path d="M0,${-RING.mid[1] - 1} l-7,-7 h14 Z" fill="#7dd3fc"/>
+    <path d="M0,${-RING.outer[1] - 1} l-8,-9 h16 Z" fill="#7dd3fc"/>`;
+  // hub
+  groups.hub.innerHTML = `<circle r="${RING.hub}" fill="#0a1628" stroke="#7dd3fc" stroke-width="1.5"/>
+    <text id="hub-name" y="-6" text-anchor="middle" font-size="15" font-weight="700" fill="#f1f5f9"></text>
+    <text id="hub-pct" y="20" text-anchor="middle" font-size="21" font-weight="800"></text>`;
+
+  $('#astro-legend').innerHTML = '<div class="muted" style="font-size:11px">الحلقة الخارجية: الموجود من المتوقع للمنطقة</div>'
+    + RATIO5.map(b => `<span><i class="sw" style="background:${b.color}"></i>${b.label}</span>`).join('');
+  astro.built = true;
+}
+
+// keep every label upright: final angle = base angle (+90 for radial labels) + current ring rotation
+function uprightLabels(g, rot) {
+  g.querySelectorAll('text[data-base]').forEach(t => {
+    const base = +t.dataset.base + (t.dataset.orient === 'radial' ? 90 : 0);
+    const f = (((base + rot) % 360) + 360) % 360;
+    t.setAttribute('transform', `rotate(${f > 90 && f < 270 ? base + 180 : base} ${t.getAttribute('x')} ${t.getAttribute('y')})`);
+  });
+}
+function rotateRing(name, target, animate = true) {
+  const g = groups[name];
+  let to = target;
+  while (to - astro.rot[name] > 180) to -= 360;      // shortest direction
+  while (astro.rot[name] - to > 180) to += 360;
+  cancelAnimationFrame(astro.raf[name]);
+  const from = astro.rot[name], apply = v => { astro.rot[name] = v; g.setAttribute('transform', `rotate(${v})`); uprightLabels(g, v); };
+  if (!animate || REDUCED) { apply(to); return; }
+  const t0 = performance.now(), dur = 900;
+  const step = now => {
+    const t = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - t, 3);
+    apply(from + (to - from) * e);
+    if (t < 1) astro.raf[name] = requestAnimationFrame(step);
+  };
+  astro.raf[name] = requestAnimationFrame(step);
+}
+
+function astroSelectRegion(k, govIndex = null, animate = true) {
+  const r = astroRegions[k];
+  astro.region = k;
+  rotateRing('outer', -(k + 0.5) * 360 / astroRegions.length, animate);
+  $$('.seg[data-kind="region"]', groups.outer).forEach(p => p.classList.toggle('dim', +p.dataset.k !== k));
+  // middle ring: governorates of the region, lowest ratio first
+  const members = govsOf(r.name), n = members.length, st = 360 / n;
+  astro.members = members;
+  const fs = n > 16 ? 9 : n > 10 ? 10.5 : 12;
+  groups.mid.innerHTML = '';
+  astro.rot.mid = 0; groups.mid.setAttribute('transform', 'rotate(0)');
+  members.forEach((i, j) => {
+    const g = govs[i], a0 = j * st + 0.5, a1 = (j + 1) * st - 0.5, mid = (a0 + a1) / 2;
+    groups.mid.appendChild(svgEl('path', { d: arcPath(RING.mid[0], RING.mid[1], a0, a1), fill: STATUS[g.status].color,
+      'fill-opacity': g.status === 'أقل من المتوقع بوضوح' ? 0.95 : 0.75, class: 'seg', 'data-kind': 'gov', 'data-i': i, 'data-j': j,
+      tabindex: 0, role: 'button', 'aria-label': `${g.name}: ${g.pct}% من المتوقع${g.rank ? '، أولوية ' + g.rank : ''}` }));
+    if (g.rank) {
+      const [px, py] = pol(RING.mid[1] - 7, mid);
+      groups.mid.appendChild(svgEl('circle', { cx: px, cy: py, r: 3.5, fill: '#ffffff', stroke: '#05080d', 'stroke-width': 1, 'pointer-events': 'none' }));
+    }
+    const [x, y] = pol((RING.mid[0] + RING.mid[1]) / 2 - 4, mid);
+    const t = svgEl('text', { x, y, class: 'mid-label', 'text-anchor': 'middle', 'dominant-baseline': 'middle', 'font-size': fs,
+      fill: g.status === 'ضمن الطبيعي' ? '#f1f5f9' : '#05080d', 'font-weight': 600, 'data-base': mid, 'data-orient': 'radial' });
+    t.textContent = g.name; groups.mid.appendChild(t);
+  });
+  aSvg.classList.toggle('compact', aSvg.clientWidth > 0 && aSvg.clientWidth < 520 && n > 12);
+  // default governorate: given, else first priority (best rank), else the lowest ratio
+  const prio = members.filter(i => govs[i].rank).sort((a, b) => govs[a].rank - govs[b].rank);
+  const pick = govIndex ?? (prio.length ? prio[0] : members[0]);
+  astroSelectGov(pick, false);
+}
+function astroSelectGov(i, animate = true) {
+  const j = astro.members.indexOf(i);
+  if (j < 0) return;
+  astro.gov = i;
+  rotateRing('mid', -(j + 0.5) * 360 / astro.members.length, animate);
+  $$('.seg[data-kind="gov"]', groups.mid).forEach(p => {
+    const on = +p.dataset.i === i;
+    p.setAttribute('stroke', on ? '#ffffff' : 'none'); p.setAttribute('stroke-width', on ? 3 : 0);
+  });
+  // inner ring: 10 entity types of the selected governorate (does not rotate)
+  const g = govs[i], st = 360 / DATA.categories.length, maxC = Math.max(1, ...g.cats);
+  groups.inner.innerHTML = '';
+  DATA.categories.forEach((c, k) => {
+    const a0 = k * st + 1.2, a1 = (k + 1) * st - 1.2, mid = (a0 + a1) / 2, v = g.cats[k], miss = g.missing.includes(c);
+    const op = v ? 0.25 + 0.7 * Math.sqrt(v / maxC) : 1;
+    groups.inner.appendChild(svgEl('path', { d: arcPath(RING.inner[0], RING.inner[1], a0, a1), fill: v ? '#7dd3fc' : '#0f1c33', 'fill-opacity': op,
+      stroke: miss ? '#f97316' : 'rgba(255,255,255,.08)', 'stroke-width': miss ? 2.5 : 1, class: 'seg', 'data-kind': 'type', 'data-k': k,
+      tabindex: 0, role: 'button', 'aria-label': `${c}: ${v}${miss ? '، غائب رغم شيوعه' : ''}` }));
+    const ink = v && op > 0.55 ? '#05080d' : miss ? '#fdba74' : v ? '#f1f5f9' : '#64748b';
+    const [x, y] = pol((RING.inner[0] + RING.inner[1]) / 2 + 4, mid);
+    const t1 = svgEl('text', { x, y: y - 7, 'text-anchor': 'middle', 'font-size': 10.5, fill: ink }); t1.textContent = TYPE_SHORT[c] || c;
+    const t2 = svgEl('text', { x, y: y + 9, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: ink }); t2.textContent = v ? v : miss ? 'غائب' : '0';
+    groups.inner.append(t1, t2);
+  });
+  $('#hub-name').textContent = g.name;
+  const hp = $('#hub-pct'); hp.textContent = g.pct + '%'; hp.setAttribute('fill', STATUS[g.status].color === '#33445f' ? '#cbd5e1' : STATUS[g.status].color);
+  renderAstroPanel(i);
+  if (state.selected !== i) setState({ selected: i });
+}
+
+function renderAstroPanel(i) {
+  const g = govs[i], r = DATA.regions.find(x => x.name === g.region);
+  const prio = govsOf(g.region).filter(k => govs[k].rank).sort((a, b) => govs[a].rank - govs[b].rank);
+  $('#astro-panel').innerHTML = `
+    <div class="eyebrow">ASTROLABE · من المنطقة إلى المحافظة إلى نوع الكيان</div>
+    <h2 style="font-size:34px">${esc(g.name)}</h2>
+    <div class="muted">${esc(g.region)} · المنطقة ككل ${r.pct}% من المتوقع</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge ${STATUS[g.status].cls}">${STATUS[g.status].short}</span>
+      ${g.rank ? `<span class="badge gold">الأولوية #${g.rank} · ${g.level}</span>` : ''}
+    </div>
+    <div><span class="big num" style="color:${STATUS[g.status].color === '#33445f' ? '#cbd5e1' : STATUS[g.status].color}">${g.pct}%</span>
+      <span class="muted" style="margin-inline-start:6px">الموجود من المتوقع لحجمها</span></div>
+    <div class="tiles">
+      <div class="tile"><div class="value num">${fmt(g.npo)}</div><div class="label">الكيانات الموجودة</div></div>
+      <div class="tile"><div class="value num">${fmt(g.expected)}</div><div class="label">المتوقع لحجمها</div></div>
+      <div class="tile"><div class="value num">${g.cats.filter(c => c > 0).length} / 10</div><div class="label">أنواع موجودة</div></div>
+      <div class="tile"><div class="value num">${fmt(g.population)}</div><div class="label">السكان</div></div>
+    </div>
+    <div><div class="muted" style="font-size:12px;margin-bottom:2px">غائب رغم شيوعه في المحافظات المماثلة</div>
+      ${g.missing.length ? g.missing.map(c => `<span class="missing-chip">${c}</span>`).join('') : '<span class="muted">لا يوجد</span>'}</div>
+    <div><div class="muted" style="font-size:12px;margin-bottom:4px">محافظات الأولوية في ${esc(g.region)}</div>
+      ${prio.length ? `<ul class="plist-mini">${prio.map(k => `<li><button type="button" data-i="${k}" class="${k === i ? 'on' : ''}">
+        <span>#${govs[k].rank} ${esc(govs[k].name)}</span><span class="p num">${govs[k].pct}%</span></button></li>`).join('')}</ul>`
+        : '<span class="muted">لا توجد محافظات أولوية في هذه المنطقة</span>'}</div>
+    <a class="btn primary" href="#profile">افتح ملف المحافظة</a>
+    <div class="legend">${Object.values(STATUS).map(s => `<span><i class="sw" style="background:${s.color}"></i>${s.short}</span>`).join('')}
+      <span><i class="sw" style="background:#fff;border-radius:50%"></i>محافظة أولوية</span><span><i class="sw" style="background:none;border:2px solid #f97316"></i>نوع غائب</span></div>
+    <p class="muted" style="font-size:12px;margin:0"><b>كيف تقرأ الإسطرلاب؟</b> الحلقة الخارجية المناطق (لونها نسبة المنطقة)، والوسطى محافظات المنطقة (لونها حالتها)، والداخلية أنواع الكيانات في المحافظة (أغمق = أكثر). المؤشر في الأعلى يشير إلى الاختيار.</p>`;
+  $$('#astro-panel .plist-mini button').forEach(b => b.addEventListener('click', () => astroSelectGov(+b.dataset.i)));
+}
+
+// bring the astrolabe to the shared selection (search, map, profile...)
+function syncAstrolabe(animate = true) {
+  if (!astro.built) return;
+  const g = govs[state.selected], k = astroRegions.findIndex(r => r.name === g.region);
+  if (astro.region !== k) astroSelectRegion(k, state.selected, animate);
+  else if (astro.gov !== state.selected) astroSelectGov(state.selected, animate);
+}
+onChange(p => {
+  if (state.view !== 'astrolabe' || !astro.built) return;
+  if ('selected' in p) syncAstrolabe();
+  if ('region' in p && state.region && govs[state.selected].region !== state.region) {
+    astroSelectRegion(astroRegions.findIndex(r => r.name === state.region));
+  }
+});
+
+// tooltip, click and keyboard on all segments
+function astroTooltip(seg) {
+  const kind = seg.dataset.kind;
+  if (kind === 'gov') return govTooltip(govs[+seg.dataset.i]);
+  if (kind === 'region') {
+    const r = astroRegions[+seg.dataset.k], n = govsOf(r.name).length;
+    return `<div class="tt">${esc(r.name)}</div><div class="row"><span>الموجود من المتوقع</span><b>${r.pct}%</b></div>
+      <div class="row"><span>المحافظات</span><b>${n}</b></div><div class="row"><span>محافظات أولوية</span><b>${r.priority}</b></div>`;
+  }
+  const g = govs[astro.gov], c = DATA.categories[+seg.dataset.k], miss = g.missing.includes(c);
+  return `<div class="tt">${esc(c)}</div><div class="row"><span>عدد الكيانات في ${esc(g.name)}</span><b>${g.cats[+seg.dataset.k]}</b></div>
+    ${miss ? '<div style="color:#fdba74;margin-top:4px">غائب رغم شيوعه في المحافظات المماثلة</div>' : ''}`;
+}
+function activate(seg) {
+  if (seg.dataset.kind === 'region') {
+    const k = +seg.dataset.k;
+    astroSelectRegion(k);
+    setState({ region: astroRegions[k].name });
+  } else if (seg.dataset.kind === 'gov') astroSelectGov(+seg.dataset.i);
+}
+aSvg.addEventListener('mousemove', e => { const s = e.target.closest('.seg'); s ? placeTooltip(astroTooltip(s), e.clientX, e.clientY) : hideTooltip(); });
+aSvg.addEventListener('mouseleave', hideTooltip);
+aSvg.addEventListener('click', e => { const s = e.target.closest('.seg'); if (s) { hideTooltip(); activate(s); } });
+aSvg.addEventListener('keydown', e => {
+  const s = e.target.closest('.seg');
+  if (!s) return;
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(s); s.focus({ preventScroll: true }); return; }
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  e.preventDefault();
+  const kind = s.dataset.kind, list = $$(`.seg[data-kind="${kind}"]`, aSvg), at = list.indexOf(s);
+  const next = list[(at + (e.key === 'ArrowLeft' ? 1 : -1) + list.length) % list.length];   // RTL: left = next
+  if (kind === 'type') { next.focus({ preventScroll: true }); return; }
+  activate(next);
+  const again = kind === 'region' ? $(`.seg[data-kind="region"][data-k="${next.dataset.k}"]`, aSvg) : $(`.seg[data-kind="gov"][data-i="${next.dataset.i}"]`, aSvg);
+  if (again) again.focus({ preventScroll: true });
+});
+
+/* ============================================================ drawer */
+const drawer = $('#drawer');
+let lastFocus = null;
+function openDrawer(i) {
+  const g = govs[i];
+  const missing = g.missing.length ? g.missing.map(c => `<span class="badge below">${c}</span>`).join(' ') : '<span class="muted">لا يوجد</span>';
+  $('#drawer-body').innerHTML = `
+    <div class="eyebrow">GOVERNORATE · محافظة</div>
+    <h2 style="font-size:32px">${esc(g.name)}</h2>
+    <div class="muted">${esc(g.region)}</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0">
+      <span class="badge ${STATUS[g.status].cls}">${STATUS[g.status].short}</span>
+      ${g.rank ? `<span class="badge gold">الأولوية #${g.rank} · ${g.level}</span>` : ''}
+    </div>
+    ${gauge(g, 300)}
+    <div class="tiles">
+      <div class="tile"><div class="value num">${fmt(g.npo)}</div><div class="label">الكيانات الموجودة</div></div>
+      <div class="tile"><div class="value num">${fmt(g.expected)}</div><div class="label">المتوقع لحجمها</div></div>
+    </div>
+    ${notesFor(g)}
+    <div><div class="muted" style="font-size:12px">أكثر الأنواع</div>${esc(topCategories(g, 3)) || '<span class="muted">—</span>'}</div>
+    <div><div class="muted" style="font-size:12px;margin-bottom:4px">غائب رغم أنه شائع في المحافظات المماثلة</div>${missing}</div>
+    <a class="btn primary" href="#profile" style="text-align:center;text-decoration:none;margin-top:4px">افتح ملف المحافظة</a>`;
+  if (!drawer.classList.contains('open')) lastFocus = document.activeElement;
+  drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false');
+  $('#drawer-close').focus({ preventScroll: true });
+}
+function closeDrawer() {
+  if (!drawer.classList.contains('open')) return;
+  drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true');
+  if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+}
+$('#drawer-close').addEventListener('click', closeDrawer);
+addEventListener('keydown', e => { if (e.key === 'Escape') { closeDrawer(); closeSearch(); } });
+function notesFor(g) {
+  const notes = [];
+  if (g.split_from) notes.push(`محافظة مستحدثة (انفصلت عن ${esc(g.split_from)}): قد تكون بعض كياناتها مسجلة في المحافظة الأم.`);
+  if (!g.path) notes.push('لا يوجد لها مضلع مستقل في ملف الحدود، لذلك لا تظهر على الخريطة.');
+  if (g.royal) notes.push(`${g.royal} منشأة بأمر ملكي (غير محسوبة ضمن الأنواع العشرة).`);
+  return notes.map(n => `<div class="note">${n}</div>`).join('');
+}
+
+/* ============================================================ profile */
+function renderProfile() {
+  const i = state.selected, g = govs[i];
+  const pos = priorityIdx.indexOf(i);
+  const prev = pos > 0 ? priorityIdx[pos - 1] : priorityIdx[priorityIdx.length - 1];
+  const next = pos >= 0 && pos < priorityIdx.length - 1 ? priorityIdx[pos + 1] : priorityIdx[0];
+  const options = govs.map((x, k) => [x, k]).sort((a, b) => a[0].name.localeCompare(b[0].name, 'ar'))
+    .map(([x, k]) => `<option value="${k}" ${k === i ? 'selected' : ''}>${esc(x.name)} – ${esc(x.region)}</option>`).join('');
+  $('#profile-head').innerHTML = `
+    <div><div class="eyebrow">GOVERNORATE PROFILE · ملف المحافظة</div><div class="title">${esc(g.name)}</div></div>
+    <div class="muted" style="font-size:16px">${esc(g.region)}</div>
+    <span class="badge ${STATUS[g.status].cls}">${STATUS[g.status].short}</span>
+    ${g.rank ? `<span class="badge gold">الأولوية #${g.rank} من ${priorityIdx.length} · ${g.level}</span>` : ''}
+    <div class="nav">
+      <button class="btn" id="prev" title="${esc(govs[prev].name)}">→ السابق</button>
+      <button class="btn" id="next" title="${esc(govs[next].name)}">التالي ←</button>
+      <select class="field" id="pick" aria-label="اختر محافظة">${options}</select>
+    </div>`;
+  $('#prev').onclick = () => setState({ selected: prev });
+  $('#next').onclick = () => setState({ selected: next });
+  $('#pick').onchange = e => setState({ selected: +e.target.value });
+
+  $('#profile-summary').innerHTML = `
+    ${gauge(g, 300)}
+    <div class="tiles">
+      <div class="tile"><div class="value num">${fmt(g.npo)}</div><div class="label">عدد الكيانات</div></div>
+      <div class="tile"><div class="value num">${fmt(g.expected)}</div><div class="label">المتوقع لحجمها</div></div>
+      <div class="tile"><div class="value num">${g.pct}%</div><div class="label">الموجود من المتوقع</div></div>
+      <div class="tile"><div class="value num">${g.per100k}</div><div class="label">لكل 100 ألف نسمة</div></div>
+      <div class="tile" style="grid-column:1/-1"><div class="value num">${fmt(g.population)}</div><div class="label">السكان (تعداد 2022) · مجموعة الحجم: ${esc(DATA.sizeGroups[g.size])}</div></div>
+    </div>
+    ${notesFor(g)}`;
+
+  const med = DATA.sizeMedians[g.size];
+  const max = Math.max(1, ...g.cats, ...med);
+  $('#profile-cats').innerHTML = `
+    <div class="eyebrow">ENTITY TYPES · أنواع الكيانات</div>
+    <h3>الكيانات حسب النوع</h3>
+    <div class="legend"><span><i class="sw" style="background:#38bdf8"></i>الموجود</span><span><i class="sw" style="background:#ffffff;width:3px"></i>وسيط المحافظات في نفس الحجم</span><span><i class="sw" style="background:#f97316"></i>غائب رغم شيوعه</span></div>
+    <div class="bars">${DATA.categories.map((c, k) => {
+      const miss = g.missing.includes(c);
+      return `<div class="bar-row${miss ? ' missing' : ''}">
+        <span class="name">${c}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${g.cats[k] / max * 100}%"></span>
+          <span class="bar-median" style="right:calc(${med[k] / max * 100}% - 1px)" title="الوسيط: ${med[k]}"></span></span>
+        <span class="num" style="text-align:left">${g.cats[k]}</span>
+        ${miss ? '<span class="missing-tag">غائب (شائع في المحافظات المماثلة)</span>' : ''}
+      </div>`;
+    }).join('')}</div>`;
+
+  $('#profile-entities').innerHTML = `
+    <div class="eyebrow">ENTITIES · الكيانات</div>
+    <h3>أسماء الكيانات (${fmt(g.entities.length)})</h3>
+    <input class="field" id="entity-search" type="search" placeholder="ابحث في أسماء كيانات هذه المحافظة…" aria-label="ابحث في أسماء الكيانات">
+    <div class="scroll" id="entity-groups" style="min-height:0;flex:1"></div>`;
+  const groupsEl = $('#entity-groups');
+  const renderGroups = q => {
+    const nq = norm(q), groups = new Map();
+    g.entities.forEach(([name, cat, type]) => {
+      if (nq && !norm(name).includes(nq)) return;
+      const label = cat < 0 ? ROYAL : DATA.categories[cat];
+      if (!groups.has(label)) groups.set(label, []);
+      groups.get(label).push([name, DATA.types[type]]);
+    });
+    if (!groups.size) { groupsEl.innerHTML = '<div class="muted" style="padding:8px 0">لا توجد نتائج.</div>'; return; }
+    groupsEl.innerHTML = [...DATA.categories, ROYAL].filter(c => groups.has(c)).map(c => `
+      <details class="group"${nq || g.entities.length <= 12 ? ' open' : ''}>
+        <summary>${c} <span class="n">(${groups.get(c).length})</span></summary>
+        <ul>${groups.get(c).map(([n, t]) => `<li>${esc(n)} <span class="t">· ${t}</span></li>`).join('')}</ul>
+      </details>`).join('');
+  };
+  renderGroups('');
+  $('#entity-search').addEventListener('input', e => renderGroups(e.target.value));
+}
+onChange(p => { if ('selected' in p && state.view === 'profile') renderProfile(); });
+
+/* ============================================================ method */
+function renderScatter() {
+  const svg = $('#scatter'), W = Math.max(svg.clientWidth, 560), H = Math.max(svg.clientHeight, 380), m = { l: 70, r: 40, t: 14, b: 46 };
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const lx = v => Math.log10(v);
+  const x0 = lx(5000), x1 = lx(1e7), y0 = lx(0.7), y1 = lx(2000);
+  const X = v => m.l + (lx(v) - x0) / (x1 - x0) * (W - m.l - m.r);
+  const Y = v => H - m.b - (lx(v) - y0) / (y1 - y0) * (H - m.t - m.b);
+  let html = '';
+  [1e4, 1e5, 1e6, 1e7].forEach(v => { html += `<line class="grid" x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${H - m.b}"/><text class="tick" x="${X(v)}" y="${H - m.b + 18}" text-anchor="middle">${fmt(v)}</text>`; });
+  [1, 10, 100, 1000].forEach(v => { html += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text class="tick" x="${m.l - 8}" y="${Y(v) + 4}" text-anchor="end">${fmt(v)}</text>`; });
+  html += `<line class="axis" x1="${m.l}" x2="${W - m.r}" y1="${H - m.b}" y2="${H - m.b}"/><line class="axis" x1="${m.l}" x2="${m.l}" y1="${m.t}" y2="${H - m.b}"/>`;
+  html += `<text class="tick" x="${(W + m.l) / 2}" y="${H - 6}" text-anchor="middle">عدد السكان (تعداد 2022، مقياس لوغاريتمي)</text>`;
+  html += `<text class="tick" transform="translate(18 ${(H - m.b) / 2}) rotate(-90)" text-anchor="middle">عدد الكيانات (مقياس لوغاريتمي)</text>`;
+  const L = DATA.model.line;
+  html += `<path class="band" d="M${L.map(p => `${X(p[0])},${Y(p[2])}`).join('L')}L${[...L].reverse().map(p => `${X(p[0])},${Y(p[3])}`).join('L')}Z"/>`;
+  html += `<path class="line" d="M${L.map(p => `${X(p[0])},${Y(p[1])}`).join('L')}"/>`;
+  govs.forEach((g, i) => {
+    html += `<circle class="pt" data-i="${i}" cx="${X(g.population)}" cy="${Y(Math.max(g.npo, 0.8))}" r="${g.rank ? 6 : 4.5}" fill="${STATUS[g.status].color}" tabindex="0" role="button" aria-label="${esc(g.name)}"/>`;
+  });
+  svg.innerHTML = html;
+  svg.querySelectorAll('.pt').forEach(c => c.classList.toggle('selected', +c.dataset.i === state.selected));
+}
+function buildMethod() {
+  const svg = $('#scatter');
+  svg.addEventListener('mousemove', e => { const p = e.target.closest('.pt'); p ? placeTooltip(govTooltip(govs[+p.dataset.i]), e.clientX, e.clientY) : hideTooltip(); });
+  svg.addEventListener('mouseleave', hideTooltip);
+  const open = i => { setState({ selected: i }); location.hash = 'profile'; };
+  svg.addEventListener('click', e => { const p = e.target.closest('.pt'); if (p) { hideTooltip(); open(+p.dataset.i); } });
+  svg.addEventListener('keydown', e => { const p = e.target.closest('.pt'); if (p && e.key === 'Enter') open(+p.dataset.i); });
+  $('#scatter-legend').innerHTML = Object.values(STATUS).map(s => `<span><i class="sw" style="background:${s.color};border-radius:50%"></i>${s.short}</span>`).join('')
+    + '<span><i class="sw" style="background:#38bdf8;height:3px"></i>المتوقع</span><span><i class="sw" style="background:rgba(56,189,248,.25)"></i>النطاق الطبيعي (80%)</span>';
+
+  const md = DATA.model;
+  $('#steps').innerHTML = [
+    ['1', 'المتوقع لكل حجم', `خط انحدار بسيط على لوغاريتم السكان ولوغاريتم عدد الكيانات في 150 محافظة؛ الميل ${md.slope}: عند تضاعف السكان يزيد عدد الكيانات نحو ${md.doubling}% فقط.`],
+    ['2', 'لماذا ليس معدلًا ثابتًا؟', 'المحافظات الصغيرة فيها كيانات لكل 100 ألف نسمة أكثر بكثير من الكبيرة؛ المعدل الثابت يجعل كل المدن الكبيرة "ناقصة" ظاهريًا.'],
+    ['3', 'النطاق الطبيعي', 'فاصل تنبؤ 80% حول الخط؛ المحافظة تحته "أقل من المتوقع بوضوح"، وتحت نطاق 95% "أولوية عالية جدًا".'],
+    ['4', 'التحقق', `R² = ${md.r2}، وعلى محافظات لم تدخل في التقدير (تحقق متقاطع بخمس طيّات) ${md.cv_r2}؛ والنتيجة لا تعتمد على مدينة الرياض.`],
+  ].map(([n, t, p]) => `<div class="step glass"><div class="n">${n}</div><strong>${t}</strong><p class="muted">${p}</p></div>`).join('');
+  $('#limitations').innerHTML = [
+    'التغطية ليست الاحتياج: التوصية هي <b>دراسة الاحتياج</b> في هذه المحافظات أولًا.',
+    `المحافظة المسجلة قد تكون المقر الإداري؛ صحّحنا ${DATA.kpis.name_fixed} كيانًا يذكر اسمها محافظة أخرى.`,
+    `${fmt(DATA.kpis.unassigned)} كيانًا بدون محافظة محددة (جمعيات وطنية أو على مستوى منطقة) غير محسوبة.`,
+    'مساحة المحافظة على الخريطة لا تعكس عدد سكانها.',
+  ].map(t => `<li>${t}</li>`).join('');
+}
+onChange(p => { if ('selected' in p) $$('#scatter .pt').forEach(c => c.classList.toggle('selected', +c.dataset.i === state.selected)); });
+
+/* ============================================================ global search */
+const search = $('#search'), suggestions = $('#suggestions');
+let matches = [], active = 0;
+function renderSuggestions() {
+  suggestions.hidden = !matches.length;
+  suggestions.innerHTML = matches.map((i, k) => `<li role="option" data-i="${i}" aria-selected="${k === active}">${esc(govs[i].name)} <span class="r">– ${esc(govs[i].region)}</span></li>`).join('');
+}
+search.addEventListener('input', () => {
+  const q = norm(search.value);
+  matches = q ? govs.map((g, i) => i).filter(i => norm(govs[i].name).includes(q)).slice(0, 8) : [];
+  active = 0; renderSuggestions();
+});
+search.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' && matches.length) { active = (active + 1) % matches.length; renderSuggestions(); e.preventDefault(); }
+  if (e.key === 'ArrowUp' && matches.length) { active = (active - 1 + matches.length) % matches.length; renderSuggestions(); e.preventDefault(); }
+  if (e.key === 'Enter' && matches.length) { pick(matches[active]); }
+});
+suggestions.addEventListener('mousedown', e => { const li = e.target.closest('li[data-i]'); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+search.addEventListener('blur', () => setTimeout(() => { suggestions.hidden = true; }, 120));
+function closeSearch() { search.value = ''; matches = []; suggestions.hidden = true; }
+function pick(i) {
+  closeSearch(); search.blur();
+  setState({ selected: i });
+  if (state.view === 'map') { zoomToGov(i); openDrawer(i); }
+  else if (state.view === 'astrolabe') { /* the astrolabe rotates via the shared state */ }
+  else if (state.view !== 'profile') location.hash = 'profile';
+}
+
+/* ============================================================ init */
+fillRegionFilters();
+renderOverview();
+buildMap();
+buildMethod();
+renderPriorityList();
+paintMap();
+route();
+</script>
+</body>
+</html>
