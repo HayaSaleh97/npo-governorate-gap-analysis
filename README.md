@@ -10,18 +10,18 @@
 - **التوصية:** دراسة الاحتياج في هذه المحافظات أولًا، بدءًا بالأنواع الغائبة.
 - **ملاحظة على السجل:** المحافظة المسجلة قد تكون المقر الإداري؛ صحّحنا 56 كيانًا اسمها يذكر محافظة أخرى، منها 12 من حبونا إلى شرورة.
 
-## طريقة التشغيل
+## How to run
 
-1. **Python 3.10** (شُغّل المشروع على 3.10.9).
-2. تثبيت المكتبات بالإصدارات المستخدمة:
+1. **Python 3.10** (the project was run on 3.10.9).
+2. Install the pinned libraries:
    ```
    pip install -r requirements.txt
    ```
-3. فتح `analysis.ipynb` (Jupyter أو VS Code أو Colab) ثم **Run All**.
-4. الدفتر يقرأ من `data_raw/` فقط، ويكتب في `data_clean/` و`outputs/`؛ لا يحمّل أي شيء من الإنترنت ولا يعدّل البيانات الخام.
-5. مدة التشغيل الكاملة نحو 10 ثوانٍ.
+3. Open `analysis.ipynb` (Jupyter, VS Code or Colab) and choose **Run All**.
+4. The notebook reads only from `data_raw/` and writes to `data_clean/` and `outputs/`. It downloads nothing from the internet and never modifies the raw data.
+5. A full run takes about 10 seconds.
 
-**الخطوط:** الرسوم تستخدم خط Tahoma (موجود في Windows)؛ في الأنظمة الأخرى يستخدم matplotlib خط DejaVu Sans تلقائيًا، ويبقى النص العربي سليمًا لأن `arabic-reshaper` و`python-bidi` يشكّلان الحروف ويرتبانها من اليمين لليسار.
+**Fonts:** the figures use Tahoma (available on Windows). On other systems matplotlib falls back to DejaVu Sans automatically, and the Arabic text still renders correctly because `arabic-reshaper` and `python-bidi` join the letters and order them right to left.
 
 ## هيكل المجلد
 
